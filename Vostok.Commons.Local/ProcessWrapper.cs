@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Vostok.Commons.Helpers.Windows;
 using Vostok.Logging.Abstractions;
 
-namespace Vostok.Commons.Process
+namespace Vostok.Commons.Local
 {
     public abstract class ProcessWrapper
     {

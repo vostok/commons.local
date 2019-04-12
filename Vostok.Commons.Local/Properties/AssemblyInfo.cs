@@ -1,4 +1,4 @@
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Vostok.Commons.Process.Tests")]
+[assembly: InternalsVisibleTo("Vostok.Commons.Local.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

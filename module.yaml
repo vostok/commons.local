@@ -5,13 +5,13 @@ src:
 
 notests *default:
   build:
-    target: Vostok.Commons.Process.sln
+    target: Vostok.Commons.Local.sln
     configuration: NoTests
     tool:
       name: dotnet
 
   install:
-    - Vostok.Commons.Process/bin/Release/netstandard2.0/Vostok.Commons.Process.dll
+    - Vostok.Commons.Local/bin/Release/netstandard2.0/Vostok.Commons.Local.dll
 
   deps:
     - vostok.logging.abstractions
@@ -19,5 +19,5 @@ notests *default:
 
 full-build > notests:
   build:
-    target: Vostok.Commons.Process.sln
+    target: Vostok.Commons.Local.sln
     configuration: Release

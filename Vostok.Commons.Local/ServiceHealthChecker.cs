@@ -4,7 +4,7 @@ using System.Threading;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
 
-namespace Vostok.Commons.Process
+namespace Vostok.Commons.Local
 {
     internal abstract class ServiceHealthChecker
     {
