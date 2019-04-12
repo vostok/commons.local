@@ -1,0 +1,10 @@
+<Project>
+  
+  <Import Project="$(MSBuildThisFileDirectory)\..\vostok.commons.helpers\Vostok.Commons.Helpers\Windows\WindowsProcessKillJob.props" />
+
+  <ItemGroup>
+    <Compile Remove="$(MSBuildThisFileDirectory)\Vostok.Commons.Local\ProcessWrapper.cs" Link="Commons\ProcessWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\Vostok.Commons.Local\ProcessWrapper.cs" Link="Commons\ProcessWrapper.cs" />
+  </ItemGroup>
+
+</Project>

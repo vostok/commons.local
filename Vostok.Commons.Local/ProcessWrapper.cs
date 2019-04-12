@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Vostok.Commons.Helpers.Windows;
 using Vostok.Logging.Abstractions;
@@ -9,7 +10,7 @@ namespace Vostok.Commons.Local
     public abstract class ProcessWrapper
     {
         protected readonly ILog Log;
-        protected volatile System.Diagnostics.Process Process;
+        protected volatile Process Process;
         private readonly string displayName;
         private readonly bool captureStandardOutput;
         private readonly WindowsProcessKillJob processKillJob;
@@ -20,7 +21,7 @@ namespace Vostok.Commons.Local
             this.displayName = displayName;
             this.captureStandardOutput = captureStandardOutput;
 
-            processKillJob = Environment.OSVersion.Platform == PlatformID.Unix ? null : new WindowsProcessKillJob();
+            processKillJob = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? new WindowsProcessKillJob() : null;
         }
 
         /// <summary>
