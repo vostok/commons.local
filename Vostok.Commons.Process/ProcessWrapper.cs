@@ -1,35 +1,32 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
+using Vostok.Commons.Helpers.Windows;
 using Vostok.Logging.Abstractions;
 
 namespace Vostok.Commons.Process
 {
-    [PublicAPI]
     public abstract class ProcessWrapper
     {
-        private readonly ILog log;
+        protected readonly ILog Log;
+        protected volatile System.Diagnostics.Process Process;
         private readonly string displayName;
+        private readonly bool captureStandardOutput;
         private readonly WindowsProcessKillJob processKillJob;
-        private volatile System.Diagnostics.Process process;
-        
-        protected abstract string FileName { get; }
-        protected abstract string Arguments { get; }
-        protected abstract string WorkingDirectory { get; }
 
-        protected ProcessWrapper(ILog log, string displayName)
+        protected ProcessWrapper(ILog log, string displayName, bool captureStandardOutput = false)
         {
-            this.log = log.ForContext(displayName);
+            Log = log.ForContext(displayName);
             this.displayName = displayName;
+            this.captureStandardOutput = captureStandardOutput;
 
-            processKillJob = Environment.OSVersion.Platform == PlatformID.Unix ? null : new WindowsProcessKillJob(this.log);
+            processKillJob = Environment.OSVersion.Platform == PlatformID.Unix ? null : new WindowsProcessKillJob();
         }
 
         /// <summary>
         /// Returns whether this process is currently running.
         /// </summary>
-        public bool IsRunning => process?.HasExited == false;
+        public bool IsRunning => Process?.HasExited == false;
 
         public virtual void Start()
         {
@@ -46,36 +43,44 @@ namespace Vostok.Commons.Process
                 WorkingDirectory = WorkingDirectory
             };
 
-            process = new System.Diagnostics.Process
+            Process = new System.Diagnostics.Process
             {
                 StartInfo = processStartInfo
             };
 
-            if (!process.Start())
+            if (!Process.Start())
                 throw new Exception($"Failed to start process of {displayName}.");
+
+            if (captureStandardOutput)
+            {
+                Task.Run(
+                    async () =>
+                    {
+                        while (!Process.StandardOutput.EndOfStream)
+                            Log.Info(await Process.StandardOutput.ReadLineAsync().ConfigureAwait(false));
+                    });
+            }
 
             Task.Run(
                 async () =>
                 {
-                    while (!process.StandardError.EndOfStream)
-                        log.Error(await process.StandardError.ReadLineAsync().ConfigureAwait(false));
+                    while (!Process.StandardError.EndOfStream)
+                        Log.Error(await Process.StandardError.ReadLineAsync().ConfigureAwait(false));
                 });
 
-            EnsureSuccessfullyStarted();
-
-            processKillJob?.AddProcess(process);
+            processKillJob?.AddProcess(Process);
         }
 
         public void Stop()
         {
             if (IsRunning)
             {
-                log.Debug($"Stopping {displayName}..");
+                Log.Debug($"Stopping {displayName}..");
 
                 try
                 {
-                    process.Kill();
-                    process.WaitForExit();
+                    Process.Kill();
+                    Process.WaitForExit();
                 }
                 catch
                 {
@@ -83,9 +88,11 @@ namespace Vostok.Commons.Process
                 }
             }
 
-            process = null;
+            Process = null;
         }
 
-        protected abstract void EnsureSuccessfullyStarted();
+        protected abstract string FileName { get; }
+        protected abstract string Arguments { get; }
+        protected abstract string WorkingDirectory { get; }
     }
 }
