@@ -27,5 +27,8 @@ namespace Vostok.Commons.Local
         {
             return value.Replace("\\", "\\\\");
         }
+
+        public override string ToString() =>
+            BuildFile();
     }
 }
