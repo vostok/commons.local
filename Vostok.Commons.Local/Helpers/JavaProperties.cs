@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Vostok.Commons.Local
+namespace Vostok.Commons.Local.Helpers
 {
-    internal class JavaProperties
+    public class JavaProperties
     {
         private readonly Dictionary<string, string> properties;
 

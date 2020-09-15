@@ -2,11 +2,13 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Vostok.Commons.Helpers.Windows;
 using Vostok.Logging.Abstractions;
 
-namespace Vostok.Commons.Local
+namespace Vostok.Commons.Local.Helpers
 {
+    [PublicAPI]
     public abstract class ProcessWrapper
     {
         protected readonly ILog Log;

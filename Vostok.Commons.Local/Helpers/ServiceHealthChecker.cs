@@ -1,12 +1,14 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using JetBrains.Annotations;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
 
-namespace Vostok.Commons.Local
+namespace Vostok.Commons.Local.Helpers
 {
-    internal abstract class ServiceHealthChecker
+    [PublicAPI]
+    public abstract class ServiceHealthChecker
     {
         protected readonly ILog Log;
 
