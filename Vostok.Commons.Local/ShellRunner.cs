@@ -57,7 +57,7 @@ namespace Vostok.Commons.Local
             if (IsRunning)
                 return;
 
-            log.Info("Starting '{Command}' command in '{Directory}' directory..", settings.Command, settings.WorkingDirectory);
+            log.Info("Starting '{Command}' command with '{Arguments} arguments in '{Directory}' directory..", settings.Command, settings.Arguments, settings.WorkingDirectory);
 
             var stopwatch = Stopwatch.StartNew();
             process = new Process {StartInfo = startInfo};
