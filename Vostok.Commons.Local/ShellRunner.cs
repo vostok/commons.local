@@ -89,7 +89,12 @@ namespace Vostok.Commons.Local
 
                 try
                 {
+#if NETCOREAPP3_1
+                    process.Kill(true);
+#else
                     process.Kill();
+#endif
+
                     process.WaitForExit();
 
                     readStandardOutputTask.GetAwaiter().GetResult();
