@@ -1,19 +1,20 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Vostok.Commons.Environment;
-using Vostok.Commons.Time;
 
 namespace Vostok.Commons.Local
 {
     public class ShellRunnerSettings
     {
-        public ShellRunnerSettings([NotNull] string commandWithArguments)
+        public ShellRunnerSettings([NotNull] string command)
         {
-            CommandWithArguments = commandWithArguments ?? throw new ArgumentNullException(nameof(commandWithArguments));
+            Command = command;
         }
 
         [NotNull]
-        public string CommandWithArguments { get; }
+        public string Command { get; }
+
+        [CanBeNull]
+        public string Arguments { get; set; }
 
         [NotNull]
         public string WorkingDirectory { get; set; } = EnvironmentInfo.BaseDirectory;

@@ -46,7 +46,7 @@ namespace Vostok.Commons.Local.Helpers
                 WorkingDirectory = WorkingDirectory
             };
 
-            Process = new System.Diagnostics.Process
+            Process = new Process
             {
                 StartInfo = processStartInfo
             };
