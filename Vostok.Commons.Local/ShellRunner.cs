@@ -57,13 +57,13 @@ namespace Vostok.Commons.Local
             if (IsRunning)
                 return;
 
-            log.Info("Starting '{Command}' in '{Directory}'..", settings.Command, settings.WorkingDirectory);
+            log.Info("Starting '{Command}' command in '{Directory}' directory..", settings.Command, settings.WorkingDirectory);
 
             var stopwatch = Stopwatch.StartNew();
             process = new Process {StartInfo = startInfo};
 
             if (!process.Start())
-                throw new Exception($"Failed to start '{settings.Command}' process.");
+                throw new Exception($"Failed to start '{settings.Command}' command process.");
 
             readStandardOutputTask = Task.Run(
                 async () =>
@@ -71,7 +71,7 @@ namespace Vostok.Commons.Local
                     while (!process.StandardOutput.EndOfStream)
                         log.Info(await process.StandardOutput.ReadLineAsync().ConfigureAwait(false));
 
-                    log.Info("Finished '{Command}' in {Elapsed}.", settings.Command, stopwatch.Elapsed.ToPrettyString());
+                    log.Info("Finished '{Command}' command in {Elapsed}.", settings.Command, stopwatch.Elapsed.ToPrettyString());
                 });
 
             readStandardErrorTask = Task.Run(
@@ -82,13 +82,15 @@ namespace Vostok.Commons.Local
                 });
 
             processKillJob?.AddProcess(process);
+
+            log.Info("Successfully started '{Command}' command.", settings.Command, settings.WorkingDirectory);
         }
 
         public void Stop()
         {
             if (IsRunning)
             {
-                log.Info("Killing '{Command}' process {Process}..", settings.Command, process.Id);
+                log.Info("Killing '{Command}' command process {Process}..", settings.Command, process.Id);
 
                 try
                 {
@@ -105,7 +107,7 @@ namespace Vostok.Commons.Local
                 }
                 catch (Exception e)
                 {
-                    log.Error(e, "Failed to stop '{Command}'.", settings.Command);
+                    log.Error(e, "Failed to stop '{Command}' command.", settings.Command);
                 }
             }
 
@@ -127,8 +129,8 @@ namespace Vostok.Commons.Local
                 if (finished == timeoutTask)
                 {
                     Stop();
-                    log.Error("Failed to complete '{Command}' within {Timeout} timeout.", settings.Command, timeout.ToPrettyString());
-                    throw new TimeoutException($"Failed to complete '{settings.Command}' within {timeout.ToPrettyString()} timeout");
+                    log.Error("Failed to complete '{Command}' command within {Timeout} timeout.", settings.Command, timeout.ToPrettyString());
+                    throw new TimeoutException($"Failed to complete '{settings.Command}' command within {timeout.ToPrettyString()} timeout");
                 }
 
                 await readStandardOutputTask.ConfigureAwait(false);
