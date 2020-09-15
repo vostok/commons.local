@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -35,6 +36,8 @@ namespace Vostok.Commons.Local
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
+                StandardOutputEncoding = Encoding.Default,
+                StandardErrorEncoding = Encoding.Default,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
                 Arguments = settings.Arguments ?? string.Empty,
