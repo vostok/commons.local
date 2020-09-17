@@ -126,6 +126,8 @@ namespace Vostok.Commons.Local
                 var finished = await Task.WhenAny(readStandardOutputTask, readStandardErrorTask, timeoutTask)
                     .ConfigureAwait(false);
 
+                timeoutCancellation.Cancel();
+
                 if (finished == timeoutTask)
                 {
                     Stop();
