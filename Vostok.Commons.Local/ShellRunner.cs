@@ -57,7 +57,7 @@ namespace Vostok.Commons.Local
             if (IsRunning)
                 return;
 
-            log.Info("Starting '{Command}' command with '{Arguments} arguments in '{Directory}' directory..", settings.Command, settings.Arguments, settings.WorkingDirectory);
+            log.Info("Starting '{Command}' command with '{Arguments}' arguments in '{Directory}' directory..", settings.Command, settings.Arguments, settings.WorkingDirectory);
 
             var stopwatch = Stopwatch.StartNew();
             process = new Process {StartInfo = startInfo};
@@ -69,7 +69,11 @@ namespace Vostok.Commons.Local
                 async () =>
                 {
                     while (!process.StandardOutput.EndOfStream)
-                        log.Info(await process.StandardOutput.ReadLineAsync().ConfigureAwait(false));
+                    {
+                        var outputMessage = await process.StandardOutput.ReadLineAsync().ConfigureAwait(false);
+                        log.Info(outputMessage);
+                        settings.StandardOutputHandler?.Invoke(outputMessage);
+                    }
 
                     log.Info("Finished '{Command}' command in {Elapsed}.", settings.Command, stopwatch.Elapsed.ToPrettyString());
                 });
@@ -135,6 +139,26 @@ namespace Vostok.Commons.Local
 
                 await readStandardOutputTask.ConfigureAwait(false);
                 await readStandardErrorTask.ConfigureAwait(false);
+            }
+        }
+
+        public async Task<bool> TrySendMessageAsync(string message)
+        {
+            if (!IsRunning)
+            {
+                log.Error("Cant send '{Message}' message to not running command.", message);
+                return false;
+            }
+
+            try
+            {
+                await process.StandardInput.WriteLineAsync(message);
+                return true;
+            }
+            catch (Exception e)
+            {
+                log.Error(e, "Fail to send '{Message}' message.", message);
+                return false;
             }
         }
     }
