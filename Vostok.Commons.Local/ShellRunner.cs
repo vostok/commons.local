@@ -154,7 +154,7 @@ namespace Vostok.Commons.Local
 
             try
             {
-                await process.StandardInput.WriteLineAsync(message);
+                await process.StandardInput.WriteLineAsync(message).ConfigureAwait(false);
                 return true;
             }
             catch (Exception e)
