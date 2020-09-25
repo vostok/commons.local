@@ -24,7 +24,7 @@ namespace Vostok.Commons.Local
 
         public ShellRunner([NotNull] ShellRunnerSettings settings, [CanBeNull] ILog log)
         {
-            log = (log ?? LogProvider.Get()).ForContext<ShellRunner>();
+            log = log ?? LogProvider.Get();
 
             this.settings = settings;
             this.log = log;
