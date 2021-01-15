@@ -6,7 +6,7 @@ using Vostok.Logging.Console;
 
 namespace Vostok.Commons.Local.Tests
 {
-    [TestFixture]
+    [TestFixture, Ignore("ping not works on appveyor")]
     internal class ShellRunner_Tests
     {
         [Test]
