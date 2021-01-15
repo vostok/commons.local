@@ -65,7 +65,7 @@ namespace Vostok.Commons.Local
             try
             {
                 if (!process.Start())
-                    throw new Exception($"Failed to start '{settings.Command}' command process.");
+                    throw new Exception("Failed to start process (process.Start returned false).");
             }
             catch (Exception error)
             {

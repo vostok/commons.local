@@ -1,4 +1,4 @@
-## 0.1.1 (15-01-2021): 
+## 0.1.2 (15-01-2021): 
 
 Fixed catching exception thrown on process start.
 
