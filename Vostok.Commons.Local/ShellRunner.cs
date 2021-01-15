@@ -62,8 +62,17 @@ namespace Vostok.Commons.Local
             var stopwatch = Stopwatch.StartNew();
             process = new Process {StartInfo = startInfo};
 
-            if (!process.Start())
-                throw new Exception($"Failed to start '{settings.Command}' command process.");
+            try
+            {
+                if (!process.Start())
+                    throw new Exception($"Failed to start '{settings.Command}' command process.");
+            }
+            catch (Exception error)
+            {
+                log.Error(error, "Failed to start '{Command}' command with '{Arguments}' arguments in '{Directory}' directory.", settings.Command, settings.Arguments, settings.WorkingDirectory);
+                process = null;
+                throw new Exception($"Failed to start '{settings.Command}' command process.", error);
+            }
 
             readStandardOutputTask = Task.Run(
                 async () =>
