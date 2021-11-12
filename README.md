@@ -1,6 +1,6 @@
 # Vostok.Commons.Local
 
-[![Build status](https://ci.appveyor.com/api/projects/status/github/vostok/commons.local?svg=true&branch=master)](https://ci.appveyor.com/project/vostok/commons.local/branch/master)
+[![Build & Test & Publish](https://github.com/vostok/commons.local/actions/workflows/ci.yml/badge.svg)](https://github.com/vostok/commons.local/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/Vostok.Commons.Local.svg)](https://www.nuget.org/packages/Vostok.Commons.Local)
 
 An utility library containing helper classes for deploy and run local services.
