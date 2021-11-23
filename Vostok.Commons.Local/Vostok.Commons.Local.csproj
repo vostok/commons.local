@@ -20,7 +20,7 @@
     <PackageTags>vostok vostok.commons</PackageTags>
     <RepositoryUrl>https://github.com/vostok/commons.local</RepositoryUrl>
   </PropertyGroup>
-  <Import Project="..\..\vostok.commons.helpers\Vostok.Commons.Helpers\Windows\WindowsProcessKillJob.props" />
+  <Import Project="..\..\vostok.commons.helpers\Vostok.Commons.Helpers\Windows\WindowsProcessKillJob.props" Condition="Exists('..\..\vostok.commons.helpers\Vostok.Commons.Helpers\Windows\WindowsProcessKillJob.props')" />
   <ItemGroup>
     <Compile Include="..\..\vostok.commons.environment\Vostok.Commons.Environment\EnvironmentInfo.cs" Link="Commons\EnvironmentInfo.cs" />
     <Compile Include="..\..\vostok.commons.environment\Vostok.Commons.Environment\RuntimeDetector.cs" Link="Commons\RuntimeDetector.cs" />
