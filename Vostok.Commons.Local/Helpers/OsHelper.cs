@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Vostok.Commons.Helpers.Windows;
 
 namespace Vostok.Commons.Local.Helpers
