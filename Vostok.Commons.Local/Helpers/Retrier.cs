@@ -14,9 +14,9 @@ namespace Vostok.Commons.Local.Helpers
                 }
                 catch (Exception e)
                 {
+                    onRetryAttempt?.Invoke();
                     if (i == maxTriesCount)
                         throw new Exception(failMessage, e);
-                    onRetryAttempt?.Invoke();
                     continue;
                 }
 
