@@ -1,3 +1,7 @@
+## 0.1.3 (26-11-2021):
+
+Added retrier for local services.
+
 ## 0.1.2 (15-01-2021): 
 
 Fixed catching exception thrown on process start.
