@@ -150,6 +150,8 @@ namespace Vostok.Commons.Local
                     throw new TimeoutException($"Failed to complete '{settings.Command}' command within {timeout.ToPrettyString()} timeout");
                 }
 
+                process.WaitForExit();
+                
                 await readStandardOutputTask.ConfigureAwait(false);
                 await readStandardErrorTask.ConfigureAwait(false);
                 stopwatch.Stop();
