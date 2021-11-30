@@ -16,7 +16,7 @@ namespace Vostok.Commons.Local.Tests
             var runner = new ShellRunner(
                 new ShellRunnerSettings("ping")
                 {
-                    Arguments = "google.com -n 100"
+                    Arguments = "localhost -n 100"
                 },
                 new SynchronousConsoleLog());
 
@@ -35,7 +35,7 @@ namespace Vostok.Commons.Local.Tests
             var runner = new ShellRunner(
                 new ShellRunnerSettings("ping")
                 {
-                    Arguments = "google.com -n 2"
+                    Arguments = "localhost -n 2"
                 },
                 new SynchronousConsoleLog());
 
@@ -51,7 +51,7 @@ namespace Vostok.Commons.Local.Tests
             var runner = new ShellRunner(
                 new ShellRunnerSettings("ping")
                 {
-                    Arguments = "google.com -n 100"
+                    Arguments = "localhost -n 100"
                 },
                 new SynchronousConsoleLog());
 
