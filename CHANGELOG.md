@@ -1,3 +1,7 @@
+## 0.1.4 (30-11-2021):
+
+Handle non-zero exit code. 
+
 ## 0.1.3 (26-11-2021):
 
 Added retrier for local services.
