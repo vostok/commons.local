@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ namespace Vostok.Commons.Local.Tests
             var runner = new ShellRunner(
                 new ShellRunnerSettings("ping")
                 {
-                    Arguments = "localhost -n 100"
+                    Arguments = GetPingArgs(100)
                 },
                 new SynchronousConsoleLog());
 
@@ -35,7 +36,7 @@ namespace Vostok.Commons.Local.Tests
             var runner = new ShellRunner(
                 new ShellRunnerSettings("ping")
                 {
-                    Arguments = "localhost -n 2"
+                    Arguments = GetPingArgs(2)
                 },
                 new SynchronousConsoleLog());
 
@@ -51,7 +52,7 @@ namespace Vostok.Commons.Local.Tests
             var runner = new ShellRunner(
                 new ShellRunnerSettings("ping")
                 {
-                    Arguments = "localhost -n 100"
+                    Arguments = GetPingArgs(100)
                 },
                 new SynchronousConsoleLog());
 
@@ -88,5 +89,10 @@ namespace Vostok.Commons.Local.Tests
                 .Should()
                 .Throw<Exception>();
         }
+
+        private string GetPingArgs(int limit) =>
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? $"localhost -n {limit}"
+                : $"localhost -c {limit}";
     }
 }
