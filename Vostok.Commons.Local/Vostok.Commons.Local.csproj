@@ -8,7 +8,7 @@
         <LangVersion>7.2</LangVersion>
     </PropertyGroup>
     <PropertyGroup>
-        <VersionPrefix>0.1.3</VersionPrefix>
+    <VersionPrefix>0.1.4</VersionPrefix>
     </PropertyGroup>
     <PropertyGroup>
         <Title>Vostok.Commons.Local</Title>
@@ -30,7 +30,7 @@
     <ItemGroup>
         <Reference Include="Vostok.Logging.Abstractions">
             <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\netstandard2.0\Vostok.Logging.Abstractions.dll</HintPath>
+      <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\$(ReferencesFramework)\Vostok.Logging.Abstractions.dll</HintPath>
         </Reference>
     </ItemGroup>
 </Project>
