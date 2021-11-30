@@ -21,6 +21,7 @@ namespace Vostok.Commons.Local
         private volatile Process process;
         private volatile Task readStandardOutputTask;
         private volatile Task readStandardErrorTask;
+        private volatile Stopwatch stopwatch;
 
         public ShellRunner([NotNull] ShellRunnerSettings settings, [CanBeNull] ILog log)
         {
@@ -59,7 +60,7 @@ namespace Vostok.Commons.Local
 
             log.Info("Starting '{Command}' command with '{Arguments}' arguments in '{Directory}' directory..", settings.Command, settings.Arguments, settings.WorkingDirectory);
 
-            var stopwatch = Stopwatch.StartNew();
+            stopwatch = Stopwatch.StartNew();
             process = new Process {StartInfo = startInfo};
 
             try
@@ -83,8 +84,6 @@ namespace Vostok.Commons.Local
                         log.Info(outputMessage);
                         settings.StandardOutputHandler?.Invoke(outputMessage);
                     }
-
-                    log.Info("Finished '{Command}' command in {Elapsed}.", settings.Command, stopwatch.Elapsed.ToPrettyString());
                 });
 
             readStandardErrorTask = Task.Run(
@@ -117,6 +116,9 @@ namespace Vostok.Commons.Local
 
                     readStandardOutputTask.GetAwaiter().GetResult();
                     readStandardErrorTask.GetAwaiter().GetResult();
+                    stopwatch.Stop();
+
+                    log.Info("Successfully killed '{Command}' command in {Elapsed}.", settings.Command, stopwatch.Elapsed.ToPrettyString());
                 }
                 catch (Exception e)
                 {
@@ -150,7 +152,16 @@ namespace Vostok.Commons.Local
 
                 await readStandardOutputTask.ConfigureAwait(false);
                 await readStandardErrorTask.ConfigureAwait(false);
+                stopwatch.Stop();
             }
+
+            if (process.ExitCode != 0)
+            {
+                log.Error("Command '{Command}' successfully completed in {Elapsed}.", settings.Command, stopwatch.Elapsed.ToPrettyString(), process.ExitCode);
+                throw new Exception($"Command '{settings.Command}' completed in {stopwatch.Elapsed.ToPrettyString()} with exit code = {process.ExitCode}.");
+            }
+
+            log.Info("Command '{Command}' failed in {Elapsed} with exit code = {ExitCode}.", settings.Command, stopwatch.Elapsed.ToPrettyString(), process.ExitCode);
         }
 
         public async Task<bool> TrySendMessageAsync(string message)
