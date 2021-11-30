@@ -157,11 +157,11 @@ namespace Vostok.Commons.Local
 
             if (process.ExitCode != 0)
             {
-                log.Error("Command '{Command}' successfully completed in {Elapsed}.", settings.Command, stopwatch.Elapsed.ToPrettyString(), process.ExitCode);
+                log.Error("Command '{Command}' failed in {Elapsed} with exit code = {ExitCode}.", settings.Command, stopwatch.Elapsed.ToPrettyString(), process.ExitCode);
                 throw new Exception($"Command '{settings.Command}' completed in {stopwatch.Elapsed.ToPrettyString()} with exit code = {process.ExitCode}.");
             }
 
-            log.Info("Command '{Command}' failed in {Elapsed} with exit code = {ExitCode}.", settings.Command, stopwatch.Elapsed.ToPrettyString(), process.ExitCode);
+            log.Info("Command '{Command}' successfully completed in {Elapsed}.", settings.Command, stopwatch.Elapsed.ToPrettyString(), process.ExitCode);
         }
 
         public async Task<bool> TrySendMessageAsync(string message)
