@@ -1,4 +1,4 @@
-notests:
+base:
   deps:
     - vostok.logging.console
     - vostok.commons.helpers/src
@@ -6,7 +6,7 @@ notests:
     - vostok.logging.abstractions
     - vostok.devtools
 
-v3_1 > notests *default:
+notests > base:
   build:
     target: Vostok.Commons.Local.sln
     configuration: NoTests
@@ -14,12 +14,24 @@ v3_1 > notests *default:
       name: dotnet
 
   install:
-    - Vostok.Commons.Local/bin/Release/netcoreapp3.1/Vostok.Commons.Local.dll
+    - Vostok.Commons.Local/bin/Release/netstandard2.0/Vostok.Commons.Local.dll  
 
-v2_1 > notests:
+v3_1 > base *default:
   build:
     target: Vostok.Commons.Local.sln
     configuration: NoTests
+    parameters: build -property:TargetFrameworks=netcoreapp3.1
+    tool:
+      name: dotnet
+
+  install:
+    - Vostok.Commons.Local/bin/Release/netcoreapp3.1/Vostok.Commons.Local.dll
+
+v2_1 > base:
+  build:
+    target: Vostok.Commons.Local.sln
+    configuration: NoTests
+    parameters: build -property:TargetFrameworks=netstandard2.0
     tool:
       name: dotnet
 
