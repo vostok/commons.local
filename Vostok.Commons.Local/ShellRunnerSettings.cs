@@ -25,5 +25,11 @@ namespace Vostok.Commons.Local
         /// </summary>
         [CanBeNull]
         public Action<string> StandardOutputHandler { get; set; }
+
+        /// <summary>
+        /// This handler is called synchronously on the StandardOutput read stream. Be careful with long-term processing.
+        /// </summary>
+        [CanBeNull]
+        public Action<string> StandardErrorHandler { get; set; }
     }
 }

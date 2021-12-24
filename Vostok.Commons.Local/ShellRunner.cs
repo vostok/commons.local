@@ -90,7 +90,11 @@ namespace Vostok.Commons.Local
                 async () =>
                 {
                     while (!process.StandardError.EndOfStream)
-                        log.Error(await process.StandardError.ReadLineAsync().ConfigureAwait(false));
+                    {
+                        var error = await process.StandardError.ReadLineAsync().ConfigureAwait(false);
+                        log.Error(error);
+                        settings.StandardErrorHandler?.Invoke(error);
+                    }
                 });
 
             processKillJob?.AddProcess(process);
@@ -151,7 +155,7 @@ namespace Vostok.Commons.Local
                 }
 
                 process.WaitForExit();
-                
+
                 await readStandardOutputTask.ConfigureAwait(false);
                 await readStandardErrorTask.ConfigureAwait(false);
                 stopwatch.Stop();
