@@ -39,6 +39,10 @@ v2_1 > base:
     - Vostok.Commons.Local/bin/Release/netstandard2.0/Vostok.Commons.Local.dll
 
 full-build > notests:
+  deps:
+    - -vostok.devtools
+    - vostok.devtools@with-net6.0
+
   build:
     target: Vostok.Commons.Local.sln
     configuration: Release

@@ -4,10 +4,9 @@
     <Import Project="..\..\vostok.devtools\git-commit-to-assembly-title\Vostok.Tools.GitCommit2AssemblyTitle.props" />
     <PropertyGroup>
         <Configurations>Debug;Release</Configurations>
-        <LangVersion>7.2</LangVersion>
     </PropertyGroup>
     <PropertyGroup>
-    <VersionPrefix>0.1.5</VersionPrefix>
+    <VersionPrefix>0.1.7</VersionPrefix>
     </PropertyGroup>
     <PropertyGroup>
         <Title>Vostok.Commons.Local</Title>
