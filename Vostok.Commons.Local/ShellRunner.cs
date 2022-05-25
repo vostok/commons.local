@@ -110,7 +110,7 @@ namespace Vostok.Commons.Local
 
                 try
                 {
-#if NETCOREAPP3_1
+#if NETCOREAPP3_1_OR_GREATER
                     process.Kill(true);
 #else
                     process.Kill();
