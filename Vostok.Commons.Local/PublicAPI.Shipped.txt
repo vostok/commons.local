@@ -1,0 +1,20 @@
+static Vostok.Commons.Local.ShellRunnerExtensions.Run(this Vostok.Commons.Local.ShellRunner shellRunner, System.TimeSpan timeout, System.Threading.CancellationToken cancellationToken) -> void
+Vostok.Commons.Local.ShellRunner
+Vostok.Commons.Local.ShellRunner.IsRunning.get -> bool
+Vostok.Commons.Local.ShellRunner.RunAsync(System.TimeSpan timeout, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+Vostok.Commons.Local.ShellRunner.ShellRunner(Vostok.Commons.Local.ShellRunnerSettings settings, Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Commons.Local.ShellRunner.Start() -> void
+Vostok.Commons.Local.ShellRunner.Stop() -> void
+Vostok.Commons.Local.ShellRunner.TrySendMessageAsync(string message) -> System.Threading.Tasks.Task<bool>
+Vostok.Commons.Local.ShellRunnerExtensions
+Vostok.Commons.Local.ShellRunnerSettings
+Vostok.Commons.Local.ShellRunnerSettings.Arguments.get -> string
+Vostok.Commons.Local.ShellRunnerSettings.Arguments.set -> void
+Vostok.Commons.Local.ShellRunnerSettings.Command.get -> string
+Vostok.Commons.Local.ShellRunnerSettings.ShellRunnerSettings(string command) -> void
+Vostok.Commons.Local.ShellRunnerSettings.StandardErrorHandler.get -> System.Action<string>
+Vostok.Commons.Local.ShellRunnerSettings.StandardErrorHandler.set -> void
+Vostok.Commons.Local.ShellRunnerSettings.StandardOutputHandler.get -> System.Action<string>
+Vostok.Commons.Local.ShellRunnerSettings.StandardOutputHandler.set -> void
+Vostok.Commons.Local.ShellRunnerSettings.WorkingDirectory.get -> string
+Vostok.Commons.Local.ShellRunnerSettings.WorkingDirectory.set -> void
