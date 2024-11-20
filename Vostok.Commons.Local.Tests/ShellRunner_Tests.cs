@@ -27,8 +27,6 @@ namespace Vostok.Commons.Local.Tests
             Thread.Sleep(5.Seconds());
 
             runner.Stop();
-
-            Thread.Sleep(5.Seconds());
         }
 
         [Test]
@@ -57,10 +55,9 @@ namespace Vostok.Commons.Local.Tests
                 },
                 new SynchronousConsoleLog());
 
-            runner.RunAsync(5.Seconds(), CancellationToken.None)
-                .Wait(10.Seconds())
+            new Action(() => runner.Run(5.Seconds(), CancellationToken.None))
                 .Should()
-                .BeTrue();
+                .Throw<TimeoutException>();
         }
 
         [Test]
