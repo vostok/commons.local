@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using FluentAssertions;
@@ -57,7 +58,6 @@ namespace Vostok.Commons.Local.Tests
                 new SynchronousConsoleLog());
 
             runner.RunAsync(5.Seconds(), CancellationToken.None)
-                .ContinueWith(_ => {})
                 .Wait(10.Seconds())
                 .Should()
                 .BeTrue();
@@ -90,7 +90,43 @@ namespace Vostok.Commons.Local.Tests
                 .Throw<Exception>();
         }
 
-        private string GetPingArgs(int limit) =>
+        [Test]
+        [Platform("Win,Linux")]
+        public void Run_should_setup_environment()
+        {
+            var variables = new List<string>();
+            var command = GetCommandWithArgs(out var args);
+            var runner = new ShellRunner(
+                new ShellRunnerSettings(command)
+                {
+                    Arguments = args,
+                    StandardOutputHandler = s => variables.Add(s),
+                    EnvironmentSetup = e => e.Add("TEST_VAR", "kontur")
+                },
+                new SynchronousConsoleLog());
+
+            runner
+                .RunAsync(5.Seconds(), CancellationToken.None)
+                .Wait(10.Seconds())
+                .Should()
+                .BeTrue();
+
+            variables.Should().Contain("TEST_VAR=kontur");
+        }
+
+        private static string GetCommandWithArgs(out string args)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                args = "/c set";
+                return "cmd";
+            }
+
+            args = null;
+            return "printenv";
+        }
+
+        private static string GetPingArgs(int limit) =>
             RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
                 ? $"localhost -n {limit}"
                 : $"localhost -c {limit}";
