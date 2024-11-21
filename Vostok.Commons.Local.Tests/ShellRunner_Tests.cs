@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using FluentAssertions;
@@ -93,14 +94,17 @@ namespace Vostok.Commons.Local.Tests
         {
             var variables = new List<string>();
             var command = GetCommandWithArgs(out var args);
+            var varName = "TEST_VAR";
             var runner = new ShellRunner(
                 new ShellRunnerSettings(command)
                 {
                     Arguments = args,
                     StandardOutputHandler = s => variables.Add(s),
-                    EnvironmentSetup = e => e.Add("TEST_VAR", "kontur")
+                    EnvironmentSetup = e => e.Add(varName, "kontur")
                 },
                 new SynchronousConsoleLog());
+
+            System.Environment.GetEnvironmentVariables()[varName].Should().BeNull(); //note check not changed for current process
 
             runner
                 .RunAsync(5.Seconds(), CancellationToken.None)
@@ -109,6 +113,8 @@ namespace Vostok.Commons.Local.Tests
                 .BeTrue();
 
             variables.Should().Contain("TEST_VAR=kontur");
+            
+            System.Environment.GetEnvironmentVariables()[varName].Should().BeNull(); //note check not changed for current process
         }
 
         private static string GetCommandWithArgs(out string args)
