@@ -18,3 +18,5 @@ Vostok.Commons.Local.ShellRunnerSettings.StandardOutputHandler.get -> System.Act
 Vostok.Commons.Local.ShellRunnerSettings.StandardOutputHandler.set -> void
 Vostok.Commons.Local.ShellRunnerSettings.WorkingDirectory.get -> string
 Vostok.Commons.Local.ShellRunnerSettings.WorkingDirectory.set -> void
+Vostok.Commons.Local.ShellRunnerSettings.EnvironmentSetup.get -> System.Action<System.Collections.Generic.IDictionary<string, string>>
+Vostok.Commons.Local.ShellRunnerSettings.EnvironmentSetup.set -> void

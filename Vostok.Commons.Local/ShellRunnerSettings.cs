@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Commons.Environment;
 
@@ -31,5 +32,11 @@ namespace Vostok.Commons.Local
         /// </summary>
         [CanBeNull]
         public Action<string> StandardErrorHandler { get; set; }
+
+        /// <summary>
+        /// Called before process start, can be used to modify new process environment variables.
+        /// </summary>
+        [CanBeNull]
+        public Action<IDictionary<string, string>> EnvironmentSetup { get; set; }
     }
 }

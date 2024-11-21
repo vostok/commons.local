@@ -60,6 +60,7 @@ namespace Vostok.Commons.Local
 
             log.Info("Starting '{Command}' command with '{Arguments}' arguments in '{Directory}' directory..", settings.Command, settings.Arguments, settings.WorkingDirectory);
 
+            settings.EnvironmentSetup?.Invoke(startInfo.Environment);
             stopwatch = Stopwatch.StartNew();
             process = new Process {StartInfo = startInfo};
 
