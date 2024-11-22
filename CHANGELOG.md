@@ -1,4 +1,4 @@
-## 0.1.7 (22-11-2024):
+## 0.1.8 (22-11-2024):
 
 Added 'EnvironmentSetup' into ShellRunner.
 
