@@ -1,3 +1,7 @@
+## 0.1.7 (22-11-2024):
+
+Added 'EnvironmentSetup' into ShellRunner.
+
 ## 0.1.6 (06-12-2021):
 
 Added `net6.0` target.
