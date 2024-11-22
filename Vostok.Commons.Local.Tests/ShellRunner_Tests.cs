@@ -16,10 +16,11 @@ namespace Vostok.Commons.Local.Tests
         [Test]
         public void Start_Stop_should_work()
         {
+            var command = GetTimeoutCommandWithArgs(100, out var args);
             var runner = new ShellRunner(
-                new ShellRunnerSettings("ping")
+                new ShellRunnerSettings(command)
                 {
-                    Arguments = GetPingArgs(100)
+                    Arguments = args
                 },
                 new SynchronousConsoleLog());
 
@@ -33,10 +34,11 @@ namespace Vostok.Commons.Local.Tests
         [Test]
         public void Run_should_work()
         {
+            var command = GetTimeoutCommandWithArgs(2, out var args);
             var runner = new ShellRunner(
-                new ShellRunnerSettings("ping")
+                new ShellRunnerSettings(command)
                 {
-                    Arguments = GetPingArgs(2)
+                    Arguments = args
                 },
                 new SynchronousConsoleLog());
 
@@ -49,10 +51,11 @@ namespace Vostok.Commons.Local.Tests
         [Test]
         public void Run_should_stop_after_timeout()
         {
+            var command = GetTimeoutCommandWithArgs(100, out var args);
             var runner = new ShellRunner(
-                new ShellRunnerSettings("ping")
+                new ShellRunnerSettings(command)
                 {
-                    Arguments = GetPingArgs(100)
+                    Arguments = args
                 },
                 new SynchronousConsoleLog());
 
@@ -76,8 +79,9 @@ namespace Vostok.Commons.Local.Tests
         [Test]
         public void Run_should_throw_on_non_zero_exit_code()
         {
+            var command = GetTimeoutCommandWithArgs(100, out _);
             var runner = new ShellRunner(
-                new ShellRunnerSettings("ping")
+                new ShellRunnerSettings(command)
                 {
                     Arguments = "asdf"
                 },
@@ -93,7 +97,7 @@ namespace Vostok.Commons.Local.Tests
         public void Run_should_setup_environment()
         {
             var variables = new List<string>();
-            var command = GetCommandWithArgs(out var args);
+            var command = GetPrintEnvironmentCommandWithArgs(out var args);
             var varName = "TEST_VAR";
             var runner = new ShellRunner(
                 new ShellRunnerSettings(command)
@@ -104,7 +108,8 @@ namespace Vostok.Commons.Local.Tests
                 },
                 new SynchronousConsoleLog());
 
-            System.Environment.GetEnvironmentVariables()[varName].Should().BeNull(); //note check not changed for current process
+            //note check not changed for current process
+            System.Environment.GetEnvironmentVariables()[varName].Should().BeNull();
 
             runner
                 .RunAsync(5.Seconds(), CancellationToken.None)
@@ -113,11 +118,10 @@ namespace Vostok.Commons.Local.Tests
                 .BeTrue();
 
             variables.Should().Contain("TEST_VAR=kontur");
-            
-            System.Environment.GetEnvironmentVariables()[varName].Should().BeNull(); //note check not changed for current process
+            System.Environment.GetEnvironmentVariables()[varName].Should().BeNull();
         }
 
-        private static string GetCommandWithArgs(out string args)
+        private static string GetPrintEnvironmentCommandWithArgs(out string args)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -129,9 +133,16 @@ namespace Vostok.Commons.Local.Tests
             return "printenv";
         }
 
-        private static string GetPingArgs(int limit) =>
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? $"localhost -n {limit}"
-                : $"localhost -c {limit}";
+        private static string GetTimeoutCommandWithArgs(int timeout, out string args)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                args = $"localhost -n {timeout}";
+                return "ping";
+            }
+
+            args = $"{timeout}";
+            return "sleep";
+        }
     }
 }
