@@ -1,3 +1,7 @@
+## 0.1.9 (16-12-2024): 
+
+Bump NuGet deps versions
+
 ## 0.1.8 (22-11-2024):
 
 Added 'EnvironmentSetup' into ShellRunner.
