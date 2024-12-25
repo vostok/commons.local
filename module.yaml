@@ -14,7 +14,20 @@ notests > base:
       name: dotnet
 
   install:
-    - Vostok.Commons.Local/bin/Release/netstandard2.0/Vostok.Commons.Local.dll  
+    - Vostok.Commons.Local/bin/Release/netstandard2.0/Vostok.Commons.Local.dll
+    - groups:
+        - target-framework: "netstandard2.0"
+          libraries:
+            - Vostok.Commons.Local/bin/Release/netstandard2.0/Vostok.Commons.Local.dll
+        - target-framework: "netcoreapp3.1"
+          libraries:
+            - Vostok.Commons.Local/bin/Release/netcoreapp3.1/Vostok.Commons.Local.dll
+        - target-framework: "net6.0"
+          libraries:
+            - Vostok.Commons.Local/bin/Release/net6.0/Vostok.Commons.Local.dll
+        - target-framework: "net8.0"
+          libraries:
+            - Vostok.Commons.Local/bin/Release/net8.0/Vostok.Commons.Local.dll
 
 v3_1 > base *default:
   build:
@@ -43,6 +56,24 @@ full-build > notests:
     - -vostok.devtools
     - vostok.devtools@with-net6.0
 
+  install:
+    - Vostok.Commons.Local/bin/Release/netstandard2.0/Vostok.Commons.Local.dll
+    - groups:
+        - target-framework: "netstandard2.0"
+          libraries:
+            - Vostok.Commons.Local/bin/Release/netstandard2.0/Vostok.Commons.Local.dll
+        - target-framework: "netcoreapp3.1"
+          libraries:
+            - Vostok.Commons.Local/bin/Release/netcoreapp3.1/Vostok.Commons.Local.dll
+        - target-framework: "net6.0"
+          libraries:
+            - Vostok.Commons.Local/bin/Release/net6.0/Vostok.Commons.Local.dll
+        - target-framework: "net8.0"
+          libraries:
+            - Vostok.Commons.Local/bin/Release/net8.0/Vostok.Commons.Local.dll
+
   build:
     target: Vostok.Commons.Local.sln
     configuration: Release
+    tool:
+      name: dotnet
