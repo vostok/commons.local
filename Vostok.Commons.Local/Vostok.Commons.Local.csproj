@@ -26,9 +26,6 @@
         <Compile Include="..\..\vostok.commons.time\Vostok.Commons.Time\TimeSpanFormatting.cs" Link="Commons\TimeSpanFormatting.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="Vostok.Logging.Abstractions">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\$(ReferencesFramework)\Vostok.Logging.Abstractions.dll</HintPath>
-        </Reference>
+      <ModuleReference Include="vostok.logging.abstractions" />
     </ItemGroup>
 </Project>
